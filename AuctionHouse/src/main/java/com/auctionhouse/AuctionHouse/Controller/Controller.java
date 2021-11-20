@@ -11,30 +11,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.auctionhouse.AuctionHouse.Entities.User;
-import com.auctionhouse.AuctionHouse.Services.UserService;
+import com.auctionhouse.AuctionHouse.Entities.*;
+import com.auctionhouse.AuctionHouse.Services.Services;
 
 @RestController
 @RequestMapping("/api/")
-public class UserController {
+public class Controller {
 	
-	private final UserService userService;
+	private final Services services;
+//	private
 	
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public Controller(Services services) {
+        this.services = services;
     }
 	
     @GetMapping("/getUser")
-    public User getUser(@RequestBody String username) {
-        System.out.println("username");
-        System.out.println(username);
-        return userService.getUser(username);
+    public User getUser(@RequestBody User user) {
+        return services.getUser(user.getUsername());
     }
     
-    @PostMapping("/registerUser")
+    
+    @PostMapping("/postUser")
     public User registerUser(@RequestBody User user) {
-    	return userService.registerUser(user);
+    	return services.registerUser(user);
     }
-    
+ 
+    @GetMapping("/getAllItemOnSale")
+    public List<ItemOnSale> getAllItemOnSale() {
+    	return services.getAllItemOnSale();
+    }
 }

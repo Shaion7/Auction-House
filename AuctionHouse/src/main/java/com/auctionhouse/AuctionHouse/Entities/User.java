@@ -32,6 +32,12 @@ public class User {
 	public User() {
 		
 	}
+	
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
     
 	
 	public String getFirstName() {
@@ -51,12 +57,6 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
 	}
 
 

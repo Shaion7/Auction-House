@@ -41,4 +41,27 @@ public class Controller {
     public List<ItemOnSale> getAllItemOnSale() {
     	return services.getAllItemOnSale();
     }
+    
+    @PostMapping("/postItemOnSale")
+    public ItemOnSale postItemOnSale(@RequestBody ItemOnSale item) {
+//    	System.out.println("item: " + item.getName());
+    	return services.postItemOnSale(item);
+    }
+    
+//    @GetMapping("/getHighestBid")
+//    public Double getCurrentBid(@RequestBody int itemId) {
+//    	return services.getCurrentBid(itemId);
+//    	
+//    }
+    
+    @PostMapping("/postBid")
+    public void postBid(@RequestBody Bid bid) {
+    	System.out.println("itemId: " + bid.getItemId());
+    	System.out.println("userId: " + bid.getUserId());
+    	System.out.println("bidAmount: " + bid.getBidAmount());
+    	services.postBid(bid);
+    	return;
+    }
+    
+//    @PostMapping("/postBid")
 }

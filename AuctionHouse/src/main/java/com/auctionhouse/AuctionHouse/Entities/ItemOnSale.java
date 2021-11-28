@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "item_on_sale")
@@ -19,13 +20,22 @@ public class ItemOnSale {
 	private String name;
 	
 	@Column(name = "initialPrice")
-	private String initialPrice;
+	private Double initialPrice;
 	
 	@Column(name = "description")
 	private String description;
 	
 	@Column(name = "timeLimit")
 	private String timeLimit;
+	
+	@Transient
+	private String category;
+	
+	@Transient
+	private String condition;
+	
+	@Transient
+	private String location;
 	
 	public ItemOnSale() {
 		
@@ -47,11 +57,11 @@ public class ItemOnSale {
 		this.name = name;
 	}
 
-	public String getInitialPrice() {
+	public Double getInitialPrice() {
 		return initialPrice;
 	}
 
-	public void setInitialPrice(String initialPrice) {
+	public void setInitialPrice(Double initialPrice) {
 		this.initialPrice = initialPrice;
 	}
 
@@ -70,6 +80,29 @@ public class ItemOnSale {
 	public void setTimeLimit(String timeLimit) {
 		this.timeLimit = timeLimit;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	
 }

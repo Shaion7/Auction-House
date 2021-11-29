@@ -7,24 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.auctionhouse.AuctionHouse.Entities.Bid;
-import com.auctionhouse.AuctionHouse.Entities.ItemOnSale;
+import com.auctionhouse.AuctionHouse.Entities.GetItemOnSale;
+import com.auctionhouse.AuctionHouse.Entities.PostItemOnSale;
 import com.auctionhouse.AuctionHouse.Entities.User;
 import com.auctionhouse.AuctionHouse.Repository.BidRepository;
-import com.auctionhouse.AuctionHouse.Repository.ItemOnSaleRepository;
+import com.auctionhouse.AuctionHouse.Repository.GetItemOnSaleRepository;
+import com.auctionhouse.AuctionHouse.Repository.PostItemOnSaleRepository;
 import com.auctionhouse.AuctionHouse.Repository.UserRepository;
 
 @Service
 public class Services {
     private final UserRepository userRepository;
-    private final ItemOnSaleRepository itemOnSaleRepository;
+    private final GetItemOnSaleRepository getItemOnSaleRepository;
+    private final PostItemOnSaleRepository postItemOnSaleRepository;
     private final BidRepository bidRepository;
 
     @Autowired
     public Services(UserRepository userRepository, 
-    				ItemOnSaleRepository itemOnSaleRepository,
+    				GetItemOnSaleRepository getItemOnSaleRepository,
+                    PostItemOnSaleRepository postItemOnSaleRepository,
                     BidRepository bidRepository) {
         this.userRepository = userRepository;
-        this.itemOnSaleRepository = itemOnSaleRepository;
+        this.getItemOnSaleRepository = getItemOnSaleRepository;
+        this.postItemOnSaleRepository = postItemOnSaleRepository;
         this.bidRepository = bidRepository;
     }
 
@@ -37,29 +42,39 @@ public class Services {
     	return userRepository.save(user);
     }
     
-    public List<ItemOnSale> getAllItemOnSale() {
-    	return itemOnSaleRepository.findAll();
+    public List<PostItemOnSale> getAllItemOnSale() {
+    	return postItemOnSaleRepository.findAll();
+    }
+
+    public List<GetItemOnSale> getItemsOnSaleForUser(String username) {
+        Long userId = userRepository.findUserByUsername(username).getUserId();
+        return getItemOnSaleRepository.findItemOnSaleByUserId(userId);
     }
     
-    public ItemOnSale postItemOnSale(ItemOnSale item) {
-    	Long categoryId = itemOnSaleRepository.getCategoryId(item.getCategory());
-    	Long conditionId = itemOnSaleRepository.getConditionId(item.getCondition());
-    	Long locationId = itemOnSaleRepository.getLocationId(item.getLocation());
-    	item = itemOnSaleRepository.save(item);
+    public PostItemOnSale postItemOnSale(PostItemOnSale item) {
+    	Long categoryId = postItemOnSaleRepository.getCategoryId(item.getCategory());
+    	Long conditionId = postItemOnSaleRepository.getConditionId(item.getCondition());
+    	Long locationId = postItemOnSaleRepository.getLocationId(item.getLocation());
+    	item = postItemOnSaleRepository.save(item);
     	
 //    	// Category Relation
-    	itemOnSaleRepository.postItemCategory(item.getItemId(), categoryId);
+    	postItemOnSaleRepository.postItemCategory(item.getItemId(), categoryId);
 //    	
 //    	// Condition Relation
-    	itemOnSaleRepository.postItemCondition(item.getItemId(), conditionId);
+    	postItemOnSaleRepository.postItemCondition(item.getItemId(), conditionId);
 //    	
 //    	// Location Relation
-    	itemOnSaleRepository.postItemLocation(item.getItemId(), locationId);
+    	postItemOnSaleRepository.postItemLocation(item.getItemId(), locationId);
     	
     	// Add to bid table
     	bidRepository.save(item.getItemId(), null, item.getInitialPrice());
     	
     	return item;
+    }
+    
+    public List<Bid> getUserBids(String username){
+    	Long userId = userRepository.findUserByUsername(username).getUserId();
+        return bidRepository.getUserBids(userId);
     }
     
 // BIDS

@@ -32,13 +32,20 @@ public class User {
 	public User() {
 		
 	}
+
+	public Long getUserId() {
+	return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
 
-    
 	
 	public String getFirstName() {
 		return firstName;

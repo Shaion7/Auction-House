@@ -4,16 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auctionhouse.AuctionHouse.Entities.*;
 import com.auctionhouse.AuctionHouse.Services.Services;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/")
 public class Controller {
@@ -26,7 +29,8 @@ public class Controller {
         this.services = services;
     }
 	
-    @GetMapping("/getUser")
+// Change to @GetMapping w/ @RequestHeader
+    @PostMapping("/getUser")
     public User getUser(@RequestBody User user) {
         return services.getUser(user.getUsername());
     }
@@ -38,12 +42,17 @@ public class Controller {
     }
  
     @GetMapping("/getAllItemOnSale")
-    public List<ItemOnSale> getAllItemOnSale() {
+    public List<PostItemOnSale> getAllItemOnSale() {
     	return services.getAllItemOnSale();
+    }
+// Change to @GetMapping w/ @RequestHeader
+    @PostMapping("/getItemsOnSaleForUser")
+    public List<GetItemOnSale> getItemsOnSaleForUser(@RequestBody User user) {
+        return services.getItemsOnSaleForUser(user.getUsername());
     }
     
     @PostMapping("/postItemOnSale")
-    public ItemOnSale postItemOnSale(@RequestBody ItemOnSale item) {
+    public PostItemOnSale postItemOnSale(@RequestBody PostItemOnSale item) {
 //    	System.out.println("item: " + item.getName());
     	return services.postItemOnSale(item);
     }
@@ -63,5 +72,8 @@ public class Controller {
     	return;
     }
     
-//    @PostMapping("/postBid")
+    @PostMapping("/getUserBids")
+    public List<Bid> getUserBids(@RequestBody User user) {
+        return services.getUserBids(user.getUsername());
+    }
 }

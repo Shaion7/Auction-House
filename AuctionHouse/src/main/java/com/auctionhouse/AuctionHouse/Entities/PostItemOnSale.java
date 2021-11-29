@@ -1,8 +1,5 @@
 package com.auctionhouse.AuctionHouse.Entities;
 
-
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,35 +9,69 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "bids")
-public class Bid{
+@Table(name = "item_on_sale")
+public class PostItemOnSale {
 	
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
-
-    @Column(name = "userId")
-    private Long userId;
-
-    @Column(name = "bidAmount")
-    private double bidAmount;
-
-	private String name;
-
-	private String timeLimit;
 	
+	@Column(name = "name")
+	private String name;
+	
+	@Column(name = "initialPrice")
+	private Double initialPrice;
+	
+	@Column(name = "description")
+	private String description;
+	
+	@Column(name = "timeLimit")
+	private String timeLimit;
+
+	@Transient
 	private String category;
 	
+	@Transient
 	private String condition;
 
+	@Transient
 	private String location;
 	
+	
+	public PostItemOnSale() {
+		
+	}
+
+	public Long getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Double getInitialPrice() {
+		return initialPrice;
+	}
+
+	public void setInitialPrice(Double initialPrice) {
+		this.initialPrice = initialPrice;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getTimeLimit() {
@@ -74,35 +105,5 @@ public class Bid{
 	public void setLocation(String location) {
 		this.location = location;
 	}
-    
-    public Bid() {
-    	
-    }
-
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public double getBidAmount() {
-		return bidAmount;
-	}
-
-	public void setBidAmount(double bidAmount) {
-		this.bidAmount = bidAmount;
-	}
 	
-	
-
 }

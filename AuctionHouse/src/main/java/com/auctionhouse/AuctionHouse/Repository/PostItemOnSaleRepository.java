@@ -7,15 +7,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.auctionhouse.AuctionHouse.Entities.ItemOnSale;
+import com.auctionhouse.AuctionHouse.Entities.GetItemOnSale;
+import com.auctionhouse.AuctionHouse.Entities.PostItemOnSale;
 
 import java.util.List;
 
 import javax.persistence.Transient;
 
 @Repository
-public interface ItemOnSaleRepository extends JpaRepository<ItemOnSale, Long> {
-	
+public interface PostItemOnSaleRepository extends JpaRepository<PostItemOnSale, Long> {
+
 //	Category
 	@Query(value = "SELECT categoryId FROM category WHERE categoryName = :category", nativeQuery = true)
 	Long getCategoryId(@Param("category") String category);

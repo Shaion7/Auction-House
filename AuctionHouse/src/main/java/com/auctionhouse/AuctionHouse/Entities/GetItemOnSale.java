@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "item_on_sale")
-public class ItemOnSale {
+public class GetItemOnSale {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +28,14 @@ public class ItemOnSale {
 	@Column(name = "timeLimit")
 	private String timeLimit;
 	
-	@Transient
 	private String category;
 	
-	@Transient
 	private String condition;
-	
-	@Transient
+
 	private String location;
 	
-	public ItemOnSale() {
+	
+	public GetItemOnSale() {
 		
 	}
 

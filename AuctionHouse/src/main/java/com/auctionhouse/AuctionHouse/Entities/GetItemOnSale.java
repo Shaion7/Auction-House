@@ -34,7 +34,6 @@ public class GetItemOnSale {
 
 	private String location;
 	
-	
 	public GetItemOnSale() {
 		
 	}
@@ -102,5 +101,8 @@ public class GetItemOnSale {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	
+	
 	
 }

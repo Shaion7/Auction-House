@@ -17,6 +17,12 @@ import javax.persistence.Transient;
 @Repository
 public interface PostItemOnSaleRepository extends JpaRepository<PostItemOnSale, Long> {
 
+// Post to sells table
+	@Transactional
+	@Modifying
+	@Query(value = "INSERT into sells (userId, itemId) VALUES (:userId, :itemId)", nativeQuery = true)
+	void postSells(@Param("userId") Long userId, @Param("itemId") Long itemId);
+
 //	Category
 	@Query(value = "SELECT categoryId FROM category WHERE categoryName = :category", nativeQuery = true)
 	Long getCategoryId(@Param("category") String category);

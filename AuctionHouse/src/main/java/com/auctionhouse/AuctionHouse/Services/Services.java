@@ -42,8 +42,9 @@ public class Services {
     	return userRepository.save(user);
     }
     
-    public List<PostItemOnSale> getAllItemOnSale() {
-    	return postItemOnSaleRepository.findAll();
+    public List<GetItemOnSale> getAllItemOnSale(String username) {
+        Long userId = userRepository.findUserByUsername(username).getUserId();
+    	return getItemOnSaleRepository.findAll(userId);
     }
 
     public List<GetItemOnSale> getItemsOnSaleForUser(String username) {
@@ -68,6 +69,9 @@ public class Services {
     	
     	// Add to bid table
     	bidRepository.save(item.getItemId(), null, item.getInitialPrice());
+
+        // Add to sell table
+        postItemOnSaleRepository.postSells(item.getUserId(), item.getItemId());
     	
     	return item;
     }
@@ -82,8 +86,18 @@ public class Services {
 //    	return bidRepository.findBidAmountByItemId(itemId);
 //    }
 //    
-    public void postBid(Bid bid) {
-    	bidRepository.save(bid.getItemId(), bid.getUserId(), bid.getBidAmount());
+    public void updateBid(Bid bid) {
+    	bidRepository.updateBid(bid.getItemId(), bid.getUserId(), bid.getBidAmount());
     	return;
+    }
+
+    public void removeItem(GetItemOnSale item) {
+        getItemOnSaleRepository.removeFromSells(item.getItemId());
+        getItemOnSaleRepository.removeFromBids(item.getItemId());
+        getItemOnSaleRepository.removeFromItemCategory(item.getItemId());
+        getItemOnSaleRepository.removeFromItemCondition(item.getItemId());
+        getItemOnSaleRepository.removeFromItemLocation(item.getItemId());
+        getItemOnSaleRepository.removeFromItemOnSale(item.getItemId());
+        return;
     }
 }

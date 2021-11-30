@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,9 +43,9 @@ public class Controller {
     	return services.registerUser(user);
     }
  
-    @GetMapping("/getAllItemOnSale")
-    public List<PostItemOnSale> getAllItemOnSale() {
-    	return services.getAllItemOnSale();
+    @PostMapping("/getAllItemOnSale")
+    public List<GetItemOnSale> getAllItemOnSale(@RequestBody User user) {
+    	return services.getAllItemOnSale(user.getUsername());
     }
 // Change to @GetMapping w/ @RequestHeader
     @PostMapping("/getItemsOnSaleForUser")
@@ -63,17 +65,23 @@ public class Controller {
 //    	
 //    }
     
-    @PostMapping("/postBid")
+    @PutMapping("/updateBid")
     public void postBid(@RequestBody Bid bid) {
-    	System.out.println("itemId: " + bid.getItemId());
-    	System.out.println("userId: " + bid.getUserId());
-    	System.out.println("bidAmount: " + bid.getBidAmount());
-    	services.postBid(bid);
+//    	System.out.println("itemId: " + bid.getItemId());
+//    	System.out.println("userId: " + bid.getUserId());
+//    	System.out.println("bidAmount: " + bid.getBidAmount());
+    	services.updateBid(bid);
     	return;
     }
     
     @PostMapping("/getUserBids")
     public List<Bid> getUserBids(@RequestBody User user) {
         return services.getUserBids(user.getUsername());
+    }
+
+    @DeleteMapping("/removeItem")
+    public void removeItem(@RequestBody GetItemOnSale item) {
+        services.removeItem(item);
+        return;
     }
 }

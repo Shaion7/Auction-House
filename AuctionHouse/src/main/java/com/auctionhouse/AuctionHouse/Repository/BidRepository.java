@@ -42,4 +42,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
 			"	WHERE b.userId = :userId AND b.itemId = i.itemId", nativeQuery = true)
 	List<Bid> getUserBids(@Param("userId") Long userId);
 	
+	@Query(value = "SELECT * from bids WHERE itemId = :itemId", nativeQuery = true)
+	Bid getBid(@Param("itemId") Long itemId);
 }

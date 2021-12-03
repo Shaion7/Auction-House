@@ -49,12 +49,18 @@ public interface GetItemOnSaleRepository extends JpaRepository<GetItemOnSale, Lo
 	void removeFromItemLocation(@Param("itemId") Long itemId);
 
 
+	/* Get userId of user who was selling the item */
+	@Query(value = "SELECT userId FROM sells WHERE itemId = :itemId", nativeQuery = true)
+	Long getItemUserId(@Param("itemId") Long itemId);
+	
 // Insert into expired_item
-//	@Query(value = "", nativeQuery = true)
-//	void insertIntoExpiredItem()
-
-//Insert into sold_item
-
+	@Transactional
+	@Modifying
+	@Query(value = "INSERT INTO expired_item (itemName, itemPrice, itemDescription, userId) VALUES(:name, :price, :itemDescription, :userId)", nativeQuery = true)
+	void insertIntoExpiredItem(@Param("name") String itemName, @Param("price") Double itemPrice, @Param("itemDescription") String itemDescription, @Param("userId") Long userId);
+	
+	@Query(value = "SELECT bidAmount FROM bids WHERE itemId = :itemId", nativeQuery = true)
+	Double getFinalPrice(@Param("itemId") Long itemId);
 
 // Get all items on sale except the items the user is selling
 	@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
@@ -82,4 +88,6 @@ public interface GetItemOnSaleRepository extends JpaRepository<GetItemOnSale, Lo
 			"	WHERE itemId IN\r\n" + 
 			"(SELECT itemId FROM sells WHERE userId = :userId);", nativeQuery = true)
 	List<GetItemOnSale> findItemOnSaleByUserId(@Param("userId") Long userId);
+	
+	
 }

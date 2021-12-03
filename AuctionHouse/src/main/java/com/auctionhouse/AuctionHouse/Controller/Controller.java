@@ -55,7 +55,6 @@ public class Controller {
     
     @PostMapping("/postItemOnSale")
     public PostItemOnSale postItemOnSale(@RequestBody PostItemOnSale item) {
-//    	System.out.println("item: " + item.getName());
     	return services.postItemOnSale(item);
     }
     
@@ -83,5 +82,53 @@ public class Controller {
     public void removeItem(@RequestBody GetItemOnSale item) {
         services.removeItem(item);
         return;
+    }
+    
+//    @PostMapping("/checkIfExpired")
+//    public void checkIfExpired(@RequestBody User user) {
+//    	List<GetItemOnSale> items = services.getItemsOnSaleForUser(user.getUsername());
+//
+//    	for (GetItemOnSale item : items) {
+//        	Double bidAmount = services.getBidAmount(item);
+//        	//if item expired
+//    		if (true) {
+//    			// if user bidded on item before expiration
+//	    		if (true)
+//	    			//insert into sold_item table
+//	    			services.insertIntoExpiredItem(item);
+//	    		else
+//	    			services.insertIntoSoldItem(item);
+//	    		services.removeItem(item);
+//    		}
+//    	}
+//    	
+//    		// insert into sold_item table
+//    	//else
+//    		// insert into expired_item table
+//    }
+    
+    @PostMapping("/insertIntoExpiredItem")
+    public void insertIntoExpiredItem(@RequestBody GetItemOnSale item) {
+    	services.insertIntoExpiredItem(item);
+    	services.removeItem(item);
+    	return;
+    }
+    
+    @PostMapping("/insertIntoSoldItem")
+    public void insertIntoSoldItem(@RequestBody GetItemOnSale item) {
+    	services.insertIntoSoldItem(item);
+    	services.removeItem(item);
+    	return;
+    }
+    
+    @PostMapping("/getExpiredItems")
+    public List<ExpiredItem> getExpiredItems(@RequestBody User user) {
+    	return services.getExpiredItems(user);
+    }
+    
+    
+    @PostMapping("/getSoldItems")
+    public List<SoldItem> getSoldItems(@RequestBody User user) {
+    	return services.getSoldItems(user);
     }
 }

@@ -1,0 +1,8 @@
+.homepage {
+  color: black;
+}
+
+.home-items-table table tbody tr:hover {
+  background-color: #5274a8;
+  cursor: pointer;
+}

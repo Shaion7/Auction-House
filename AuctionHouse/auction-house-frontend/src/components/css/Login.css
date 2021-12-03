@@ -1,0 +1,33 @@
+.card {
+  position: relative;
+  margin-top: 15vh;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
+  /* opacity: 0.5; */
+}
+.card-body {
+  background: #5274a8;
+}
+
+.container {
+  background: 2b4f84;
+  color: #ffffff;
+}
+
+.extra-space {
+  margin-top: 10vh;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.card-links {
+  margin-top: 50px;
+}
+
+.signup-link {
+  margin-top: 15px;
+  text-decoration: underline;
+}

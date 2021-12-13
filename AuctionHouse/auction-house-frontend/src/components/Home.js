@@ -18,15 +18,32 @@ export default function Home() {
   const [reset, setReset] = useState(false);
 
   useEffect(() => {
-    getAllUserItemsOnSale();
     getUserBids();
+    getAllUserItemsOnSale();
+
+    const interval = setInterval(() => {
+      checkIfItemExpired();
+    }, 7000);
     setReset(false);
+    return () => {
+      clearInterval(interval);
+    };
   }, [reset]);
 
   //Wont need this because this would be displayed in the home page already
   // const goToMyItemsOnSale = () => {
   //   history.push("/myItems");
   // };
+
+  const checkIfItemExpired = () => {
+    axios
+      .post("http://localhost:8080/api/handleExpiredAndSoldItems", {
+        username: user.username,
+      })
+      .then((res) => {
+        setReset(true);
+      });
+  };
 
   const getAllUserItemsOnSale = () => {
     const username = {
@@ -35,7 +52,6 @@ export default function Home() {
     axios
       .post("http://localhost:8080/api/getItemsOnSaleForUser", username)
       .then((res) => {
-        console.log(res);
         setUserItemsOnSale(res.data);
       });
   };
@@ -47,7 +63,6 @@ export default function Home() {
     axios
       .post("http://localhost:8080/api/getUserBids", username)
       .then((res) => {
-        console.log(res);
         setUserBids(res.data);
       });
   };
@@ -57,7 +72,6 @@ export default function Home() {
       .delete("http://localhost:8080/api/removeItem", { data: { itemId: id } })
       .then((res) => {
         setReset(true);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -76,6 +90,7 @@ export default function Home() {
                   <th>Initial Price</th>
                   <th>Description</th>
                   <th>Time Limit</th>
+                  <th>Bid Amount</th>
                 </tr>
               </thead>
               <tbody>
@@ -132,20 +147,6 @@ export default function Home() {
         </Row>
       </Container>
     </div>
-
-    // category: "Sports Equipment"
-    // condition: "Not used"
-    // description: "testing"
-    // initialPrice: 300
-    // itemId: 32
-    // location: "San Jose"
-    // name: "Bench Press"
-    // timeLimit: "10"
-    // <div className="homepage">
-    //   <h1>{`Hello, ${user.username}`}</h1>
-    // <button type="button" className="btn btn-danger" onClick={logout}>
-    //   Logout
-    // </button>
 
     // <button className="btn btn-primary" onClick={goToSellItemPage}>
     //   Sell Item

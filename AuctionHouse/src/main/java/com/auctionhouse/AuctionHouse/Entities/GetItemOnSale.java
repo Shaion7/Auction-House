@@ -1,5 +1,7 @@
 package com.auctionhouse.AuctionHouse.Entities;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +28,7 @@ public class GetItemOnSale {
 	private String description;
 	
 	@Column(name = "timeLimit")
-	private String timeLimit;
+	private Timestamp timeLimit;
 	
 	private String category;
 	
@@ -70,11 +72,11 @@ public class GetItemOnSale {
 		this.description = description;
 	}
 
-	public String getTimeLimit() {
+	public Timestamp getTimeLimit() {
 		return timeLimit;
 	}
 
-	public void setTimeLimit(String timeLimit) {
+	public void setTimeLimit(Timestamp timeLimit) {
 		this.timeLimit = timeLimit;
 	}
 
@@ -101,8 +103,6 @@ public class GetItemOnSale {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
-	
 	
 	
 }

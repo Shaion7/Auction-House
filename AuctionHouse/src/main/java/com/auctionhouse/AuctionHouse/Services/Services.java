@@ -54,8 +54,9 @@ public class Services {
     	return userRepository.save(user);
     }
     
-    public List<GetItemOnSale> getAllItemOnSale(String username) {
-        Long userId = userRepository.findUserByUsername(username).getUserId();
+    public List<GetItemOnSale> getAllItemOnSale(User user) {
+
+        Long userId = userRepository.findUserByUsername(user.getUsername()).getUserId();
     	return getItemOnSaleRepository.findAll(userId);
     }
 
@@ -191,4 +192,59 @@ public class Services {
     public Double getBidAmount(GetItemOnSale item) {
     	return bidRepository.getBid(item.getItemId()).getBidAmount();
     }
+
+	public Boolean checkIfItemExpired(GetItemOnSale item) {
+		Timestamp currentTS = new Timestamp(System.currentTimeMillis());
+		// if item expired
+		if (item.getTimeLimit().getTime() - currentTS.getTime() <= 0)
+			return true;
+		return false;
+	}
+
+	public Boolean checkIfUserBidded(GetItemOnSale item) {
+    	/* Get userId of user who bought the item */
+    	Long boughtUserId = soldItemRepository.getBoughtUserId(item.getItemId());
+    	System.out.println("boughtUserId: " + boughtUserId);
+
+		if (boughtUserId != null) {
+			return true;
+		}
+		System.out.println("returning false");
+		return false;
+	}
+
+	public List<GetItemOnSale> getItemsOnSaleByFilter(User user, String category, String condition, String location) {
+		Long userId = userRepository.findUserByUsername(user.getUsername()).getUserId();
+
+		/* Category */
+		if (category != "" && condition == "" && location == "")
+			return getItemOnSaleRepository.findAllByCategory(userId, category);
+
+		/* Condition */
+		else if (category == "" && condition != "" && location == "")
+			return getItemOnSaleRepository.findAllByCondition(userId, condition);
+
+		/* Location */
+		else if (category == "" && condition == "" && location != "")
+			return getItemOnSaleRepository.findAllByLocation(userId, location);
+
+		/* Category and Condition */
+		else if (category != "" && condition != "" && location == "")
+			return getItemOnSaleRepository.findAllByCategoryAndCondition(userId, category, condition);
+
+		/* Category and Location */
+		else if (category != "" && condition == "" && location != "")
+			return getItemOnSaleRepository.findAllByCategoryAndLocation(userId, category, location);
+
+		/* Condition and Location */
+		else if (category == "" && condition != "" && location != "")
+			return getItemOnSaleRepository.findAllByConditionAndLocation(userId, condition, location);
+
+		/* Category, Condition, and Location */
+		else if (category != "" && condition != "" && location != "")
+			return getItemOnSaleRepository.findAllByCategoryAndConditionAndLocation(userId, category, condition, location);
+		
+		/* None selected */
+    	return getItemOnSaleRepository.findAll(userId);
+	}
 }

@@ -41,6 +41,6 @@ public interface SoldItemRepository extends JpaRepository<SoldItem, Long> {
 			+ "SELECT soldItemId, bought.userId, username\n"
 			+ "FROM bought INNER JOIN user ON bought.userId = user.userId\n"
 			+ ") as b\n"
-			+ "WHERE s.userId = 2", nativeQuery = true)
+			+ "WHERE s.userId = :userId", nativeQuery = true)
 	List<SoldItem> getSoldItems(@Param("userId") Long userId);
 }

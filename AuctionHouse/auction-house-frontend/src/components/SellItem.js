@@ -3,6 +3,9 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import MyNavbar from "./MyNavbar";
 
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+
 export default function SellItem() {
   const user = JSON.parse(localStorage.getItem("loggedUser"));
 
@@ -26,15 +29,16 @@ export default function SellItem() {
 
   const submitItem = () => {
     //console.log("userId: " + user.userId);
+    // console.log("category: " + JSON.stringify(category));
     axios
       .post("http://localhost:8080/api/postItemOnSale/", {
         name: itemName,
         initialPrice: price,
         description: description,
         timeLimit: timeLimit,
-        category: category,
-        condition: condition,
-        location: location,
+        category: category.label,
+        condition: condition.label,
+        location: location.label,
         userId: user.userId,
       })
       .then((res) => {
@@ -43,25 +47,57 @@ export default function SellItem() {
       });
   };
 
-  // const getItemAndAddToSells = () => {
-  //   const item = {
-  //     itemName: itemName,
-  //     category: category,
-  //     description: description,
-  //     condition: condition,
-  //     bid: bid,
-  //   };
-  //   axios.post("http://localhost:3001/getSubmittedItem", item).then((res) => {
-  //     console.log(res.data);
-  //     const sells = {
-  //       userId: user.userId,
-  //       itemId: res.data[0].itemId,
-  //     };
-  //     axios.post("http://localhost:3001/addToSells", sells).then((res) => {
-  //       console.log(res);
-  //     });
-  //   });
-  // };
+  const categories = [
+    "Sports Equipment",
+    "Kitchenware",
+    "Furniture",
+    "Homeware",
+    "Electrical",
+    "Technology",
+    "Games",
+    "Music Instruments",
+    "Beach",
+    "School",
+    "Officeware",
+    "Pants",
+    "Shoes",
+    "Jewelry",
+    "Recreation",
+  ];
+  const conditions = [
+    "Unopened",
+    "New",
+    "No defects",
+    "Used but new",
+    "Used but small defects",
+    "Fully functional",
+    "Lightly damaged but functional",
+    "Functional but few cosmetic damages",
+    "Not used",
+    "Needs minor fixing",
+    "Original",
+    "Old but functional",
+    "Old unopened",
+    "Slight damages",
+    "Old  but no damages",
+  ];
+  const locations = [
+    "San Jose",
+    "San Francisco",
+    "Sacramento",
+    "Oakland",
+    "Santa Cruz",
+    "Santa Rosa",
+    "Fremont",
+    "Modesto",
+    "Daly City",
+    "San Leandro",
+    "Berkeley",
+    "Fresno",
+    "Sannyvale",
+    "Milpitas",
+    "Union City",
+  ];
 
   return (
     <div>
@@ -114,31 +150,31 @@ export default function SellItem() {
 
                 <div className="form-group">
                   <label>Category</label>
-                  <input
-                    className="form-control"
-                    placeholder=""
-                    type="text"
-                    onChange={(e) => setCategory(e.target.value)}
+                  <Dropdown
+                    options={categories}
+                    onChange={setCategory}
+                    // value={categories[0]}
+                    placeholder="Select a category"
                   />
                 </div>
 
                 <div className="form-group">
                   <label>Condition</label>
-                  <input
-                    className="form-control"
-                    placeholder=""
-                    type="text"
-                    onChange={(e) => setCondition(e.target.value)}
+                  <Dropdown
+                    options={conditions}
+                    onChange={setCondition}
+                    // value={conditions[0]}
+                    placeholder="Select a condition"
                   />
                 </div>
 
                 <div className="form-group">
                   <label>Location</label>
-                  <input
-                    className="form-control"
-                    placeholder=""
-                    type="text"
-                    onChange={(e) => setLocation(e.target.value)}
+                  <Dropdown
+                    options={locations}
+                    onChange={setLocation}
+                    // value={locations[0]}
+                    placeholder="Select a location"
                   />
                 </div>
 

@@ -90,4 +90,96 @@ public interface GetItemOnSaleRepository extends JpaRepository<GetItemOnSale, Lo
 	List<GetItemOnSale> findItemOnSaleByUserId(@Param("userId") Long userId);
 	
 	
+		@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND categoryName = :category", nativeQuery = true)
+	List<GetItemOnSale> findAllByCategory(@Param("userId") Long userId, @Param("category") String category);
+
+			@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND conditionName = :condition", nativeQuery = true)
+	List<GetItemOnSale> findAllByCondition(@Param("userId") Long userId, @Param("condition") String condition);
+
+				@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND locationName = :location", nativeQuery = true)
+	List<GetItemOnSale> findAllByLocation(@Param("userId") Long userId, @Param("location") String location);
+
+					@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND categoryName = :category AND conditionName = :condition", nativeQuery = true)
+	List<GetItemOnSale> findAllByCategoryAndCondition(@Param("userId") Long userId, @Param("category") String category, @Param("condition") String condition);
+
+					@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND categoryName = :category AND locationName = :location", nativeQuery = true)
+	List<GetItemOnSale> findAllByCategoryAndLocation(@Param("userId") Long userId, @Param("category") String category, @Param("location") String location);
+
+	
+					@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND conditionName = :condition AND locationName = :location", nativeQuery = true)
+	List<GetItemOnSale> findAllByConditionAndLocation(@Param("userId") Long userId, @Param("condition") String condition, @Param("location") String location);
+
+	
+					@Query(value = "SELECT i.itemId, b.userId, i.name, i.description, i.categoryName AS category, i.conditionName AS \"condition\", i.locationName AS location, i.timeLimit, b.bidAmount AS initialPrice\r\n" + 
+			"FROM (SELECT sells.itemId, bidAmount, sells.userId FROM bids INNER JOIN \r\n" + 
+			"	sells ON bids.itemId = sells.itemId) as b INNER JOIN\r\n" + 
+			"	(SELECT * FROM item_on_sale NATURAL JOIN\r\n" + 
+			"	item_category NATURAL JOIN\r\n" + 
+			"	item_condition NATURAL JOIN\r\n" + 
+			"	item_location NATURAL JOIN\r\n" + 
+			"	category NATURAL JOIN\r\n" + 
+			"	cs157a_project.condition\r\n" + 
+			"	NATURAL JOIN location) as i ON b.itemId = i.itemId\r\n" + 
+			"WHERE b.userId <> :userId AND categoryName = :category AND conditionName = :condition AND locationName = :location", nativeQuery = true)
+	List<GetItemOnSale> findAllByCategoryAndConditionAndLocation(@Param("userId") Long userId, @Param("category") String category, @Param("condition") String condition, @Param("location") String location);
 }

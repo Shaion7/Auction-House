@@ -1,0 +1,14 @@
+.instruction {
+  margin-bottom: 30px;
+}
+
+.sort-button button {
+  margin-top: 3.3vh;
+  margin-bottom: 3vh;
+  padding: 7px 60px 7px 60px;
+}
+
+.sort-button {
+  display: flex;
+  justify-content: center;
+}

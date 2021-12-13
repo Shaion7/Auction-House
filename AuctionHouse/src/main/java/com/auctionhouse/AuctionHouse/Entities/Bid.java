@@ -3,6 +3,7 @@ package com.auctionhouse.AuctionHouse.Entities;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "bids")
@@ -29,10 +33,13 @@ public class Bid{
 
 	private String timeLimit;
 	
+	//@Transient
 	private String category;
 	
+	//@Transient
 	private String condition;
 
+	//@Transient
 	private String location;
 	
 	public String getName() {
@@ -102,7 +109,4 @@ public class Bid{
 	public void setBidAmount(double bidAmount) {
 		this.bidAmount = bidAmount;
 	}
-	
-	
-
 }

@@ -35,7 +35,7 @@ export default function MyNavbar() {
             <Nav.Link onClick={goToHome}>Home</Nav.Link>
             <Nav.Link onClick={goToSellItemPage}>Sell Items</Nav.Link>
             <Nav.Link onClick={goToAllItems}>Browse Items</Nav.Link>
-            <Nav.Link onClick={goToUserHistory}>History</Nav.Link>
+            <Nav.Link onClick={goToUserHistory}>My History</Nav.Link>
             <Nav.Link onClick={logout}>Logout</Nav.Link>
           </Nav>
         </Container>

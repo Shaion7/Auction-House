@@ -12,5 +12,7 @@ public class AuctionHouseApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AuctionHouseApplication.class, args);
 	}
+	
+	
 
 }

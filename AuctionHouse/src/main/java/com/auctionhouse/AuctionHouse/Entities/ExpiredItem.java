@@ -1,6 +1,7 @@
 package com.auctionhouse.AuctionHouse.Entities;
 
 import java.sql.Date;
+
 import java.sql.Timestamp;
 
 import javax.persistence.Column;

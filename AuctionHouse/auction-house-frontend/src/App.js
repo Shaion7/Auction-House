@@ -3,7 +3,6 @@ import Signup from "./components/Signup";
 import Home from "./components/Home";
 import SellItem from "./components/SellItem";
 import UserItems from "./components/UserItems";
-import Bid from "./components/Bid";
 import Items from "./components/Items";
 
 import "./App.css";
@@ -21,7 +20,6 @@ function App() {
           <Route path="/home" component={Home} />
           <Route path="/sellItem" component={SellItem} />
           <Route path="/myItems" component={UserItems} />
-          <Route path="/bidOnItem/:id/:name/:price" component={Bid} />
           <Route path="/allItems" component={Items} />
           <Route path="/history" component={History} />
         </Switch>

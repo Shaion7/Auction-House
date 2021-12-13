@@ -122,7 +122,7 @@ export default function History() {
                     <td>{item.itemName}</td>
                     <td>{`$${parseFloat(item.itemPrice).toFixed(2)}`}</td>
                     <td>{item.itemDescription}</td>
-                    <td>{formatTimestamp(item.expiredTime)}</td>
+                    <td>{`${formatTimestamp(item.expiredTime)}`}</td>
                   </tr>
                 ))}
               </tbody>

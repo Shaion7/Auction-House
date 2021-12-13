@@ -9,14 +9,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  // Chris only needs the username when we pass hit the login button. Chris sends back user object like I did in Node.
   const login = () => {
     axios
       .post("http://localhost:8080/api/getUser", {
         username: username,
       })
       .then((res) => {
-        //console.log(res);
         if (res.data === "") {
           alert("Invalid username");
         } else {
@@ -28,17 +26,6 @@ export default function Login() {
           }
         }
       });
-
-    // axios({
-    //   method: "post",
-    //   url: "http://localhost:8080/api/getUser",
-    //   headers: {
-    //     username: username,
-    //   },
-    //   data: {
-    //     // This is the body part
-    //   },
-    // }).then((res) => console.log(res));
   };
 
   return (

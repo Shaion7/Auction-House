@@ -8,8 +8,6 @@ import { useHistory } from "react-router-dom";
 
 import "./css/Items.css";
 
-// const [modalShow, setModalShow] = useState(false);
-
 export default function Items() {
   const user = JSON.parse(localStorage.getItem("loggedUser"));
   const history = useHistory();
@@ -80,19 +78,7 @@ export default function Items() {
 
   useEffect(() => {
     groupItems();
-    console.log("useEffect running");
   }, [modalShow]);
-
-  // const getAllItems = () => {
-  //   axios
-  //     .post("http://localhost:8080/api/getAllItemOnSale", {
-  //       username: user.username,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       setItems(res.data);
-  //     });
-  // };
 
   const groupItems = () => {
     let myCategory = category.label;
@@ -121,19 +107,15 @@ export default function Items() {
         }
       )
       .then((res) => {
-        console.log(res);
         setItems(res.data);
       });
   };
 
   const formatTimestamp = (ts) => {
-    console.log(ts);
-
     /* Split Timestamp into Date and Time */
     const timestamp = ts.split("T");
     const date = timestamp[0];
     const time = timestamp[1];
-    console.log("timestamp", timestamp);
 
     /* Year, Month, Day */
     const year = date.split("-")[0];
@@ -164,7 +146,6 @@ export default function Items() {
               <Dropdown
                 options={categories}
                 onChange={setCategory}
-                // value={categories[0]}
                 placeholder="Select a category"
               />
             </div>
@@ -175,7 +156,6 @@ export default function Items() {
               <Dropdown
                 options={conditions}
                 onChange={setCondition}
-                // value={categories[0]}
                 placeholder="Select a condition"
               />
             </div>
@@ -186,7 +166,6 @@ export default function Items() {
               <Dropdown
                 options={locations}
                 onChange={setLocation}
-                // value={categories[0]}
                 placeholder="Select a location"
               />
             </div>
@@ -264,9 +243,6 @@ export default function Items() {
           } else {
             alert("Place a higher bid.");
           }
-
-          //setModalShow(false);
-          console.log("bids: " + bid);
         }}
         onClose={() => setModalShow(false)}
         itemData={data}

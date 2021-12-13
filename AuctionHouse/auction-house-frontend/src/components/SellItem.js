@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import MyNavbar from "./MyNavbar";
@@ -14,7 +14,7 @@ export default function SellItem() {
   const [description, setDescription] = useState("");
   const [condition, setCondition] = useState("");
   const [price, setPrice] = useState(0);
-  const [timeLimit, setTimeLimit] = useState(0);
+  const [timeLimit, setTimeLimit] = useState("");
   const [location, setLocation] = useState("");
 
   const history = useHistory();
@@ -28,21 +28,19 @@ export default function SellItem() {
   };
 
   const submitItem = () => {
-    //console.log("userId: " + user.userId);
-    // console.log("category: " + JSON.stringify(category));
+    const timestamp = `${timeLimit.replace("T", " ")}:00`;
     axios
       .post("http://localhost:8080/api/postItemOnSale/", {
         name: itemName,
         initialPrice: price,
         description: description,
-        timeLimit: timeLimit,
+        timeLimit: timestamp,
         category: category.label,
         condition: condition.label,
         location: location.label,
         userId: user.userId,
       })
       .then((res) => {
-        console.log(res);
         history.push("/home");
       });
   };
@@ -140,12 +138,14 @@ export default function SellItem() {
 
                 <div className="form-group">
                   <label>Time Limit</label>
-                  <input
-                    className="form-control"
-                    placeholder=""
-                    type="text"
-                    onChange={(e) => setTimeLimit(e.target.value)}
-                  />
+                  <div>
+                    <input
+                      type="datetime-local"
+                      onChange={(e) => {
+                        setTimeLimit(e.target.value);
+                      }}
+                    ></input>
+                  </div>
                 </div>
 
                 <div className="form-group">
@@ -153,7 +153,6 @@ export default function SellItem() {
                   <Dropdown
                     options={categories}
                     onChange={setCategory}
-                    // value={categories[0]}
                     placeholder="Select a category"
                   />
                 </div>
@@ -163,7 +162,6 @@ export default function SellItem() {
                   <Dropdown
                     options={conditions}
                     onChange={setCondition}
-                    // value={conditions[0]}
                     placeholder="Select a condition"
                   />
                 </div>
@@ -173,7 +171,6 @@ export default function SellItem() {
                   <Dropdown
                     options={locations}
                     onChange={setLocation}
-                    // value={locations[0]}
                     placeholder="Select a location"
                   />
                 </div>

@@ -85,7 +85,7 @@ public class Controller {
 	}
 
 	@PostMapping("/handleExpiredAndSoldItems")
-	public void handleExpiredAndSoldItems(@RequestBody User user) {
+	public List<GetItemOnSale> handleExpiredAndSoldItems(@RequestBody User user) {
 		List<GetItemOnSale> items = services.getItemsOnSaleForUser(user.getUsername());
 		System.out.println("working");
 
@@ -101,6 +101,8 @@ public class Controller {
 				services.removeItem(item);
 			}
 		}
+
+		return services.getItemsOnSaleForUser(user.getUsername());
 	}
 
 	@PostMapping("/insertIntoExpiredItem")

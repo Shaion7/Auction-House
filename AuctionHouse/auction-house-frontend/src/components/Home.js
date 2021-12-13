@@ -30,17 +30,30 @@ export default function Home() {
     };
   }, [reset]);
 
-  //Wont need this because this would be displayed in the home page already
-  // const goToMyItemsOnSale = () => {
-  //   history.push("/myItems");
-  // };
-
   const checkIfItemExpired = () => {
     axios
       .post("http://localhost:8080/api/handleExpiredAndSoldItems", {
         username: user.username,
       })
       .then((res) => {
+        let items = res.data;
+
+        if (items.length < userItemsOnSale.length) {
+          const expiredItems = userItemsOnSale.filter((el) => {
+            return !items.find((element) => {
+              return element.name === el.name;
+            });
+          });
+
+          /* Get Expired Item Names */
+          let expiredItemNames = "";
+          for (let i = 0; i < expiredItems.length; i++) {
+            expiredItemNames = expiredItemNames + expiredItems[i].name + "\n";
+          }
+
+          /* Alert user which items have expired */
+          alert("The following item(s) have expired: \n" + expiredItemNames);
+        }
         setReset(true);
       });
   };
@@ -50,7 +63,7 @@ export default function Home() {
       username: user.username,
     };
     axios
-      .post("http://localhost:8080/api/getItemsOnSaleForUser", username)
+      .post("http://localhost:8080/api/handleExpiredAndSoldItems", username)
       .then((res) => {
         setUserItemsOnSale(res.data);
       });
@@ -74,6 +87,28 @@ export default function Home() {
         setReset(true);
       })
       .catch((err) => console.log(err));
+  };
+
+  const formatTimestamp = (ts) => {
+    /* Split Timestamp into Date and Time */
+    const timestamp = ts.split("T");
+    const date = timestamp[0];
+    const time = timestamp[1];
+
+    /* Year, Month, Day */
+    const year = date.split("-")[0];
+    const month = date.split("-")[1];
+    const day = date.split("-")[2];
+
+    /* Hours, Mins, Secs */
+    const hours = time.split(":")[0];
+    const mins = time.split(":")[1];
+    const secs = time.split(":")[2].split(".")[0];
+
+    /* Return Formatted Date */
+    return (
+      month + "/" + day + "/" + year + " " + hours + ":" + mins + ":" + secs
+    );
   };
 
   return (
@@ -129,7 +164,7 @@ export default function Home() {
                     <td>{item.category}</td>
                     <td>{item.condition}</td>
                     <td>{item.location}</td>
-                    <td>{item.timeLimit}</td>
+                    <td>{formatTimestamp(item.timeLimit)}</td>
                     <td>
                       <button
                         type="button"
